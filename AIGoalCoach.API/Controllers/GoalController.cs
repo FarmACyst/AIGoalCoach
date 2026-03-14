@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace AIGoalCoach.Controllers
+namespace AIGoalCoach.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
