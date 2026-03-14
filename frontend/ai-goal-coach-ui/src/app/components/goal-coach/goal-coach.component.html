@@ -1,0 +1,20 @@
+<div class="page">
+	<header class="header">AI Goal Coach</header>
+
+	<main class="card">
+		<label class="sr-only" for="goalInput">Describe your goal</label>
+		<input id="goalInput" class="input" [(ngModel)]="query" placeholder="Type your goal or prompt..." (keyup.enter)="refine()" />
+
+		<button class="btn" (click)="refine()" [disabled]="loading">{{ loading ? 'Refining...' : 'Refine' }}</button>
+
+		<section class="results" *ngIf="results?.length || error">
+			<div *ngIf="error" class="error">{{ error }}</div>
+
+			<ul *ngIf="results?.length" class="result-list">
+				<li *ngFor="let r of results" class="result-item">{{ r }}</li>
+			</ul>
+		</section>
+	</main>
+
+</div>
+
