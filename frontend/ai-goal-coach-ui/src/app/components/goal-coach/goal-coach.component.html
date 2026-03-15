@@ -22,11 +22,11 @@
           aria-describedby="goal-hint goal-error"
           [attr.aria-busy]="isLoading"
           [disabled]="isLoading"
-          maxlength="500"
+          maxlength="100"
           rows="3"
           required
         ></textarea>
-        <span id="goal-hint" class="goal-coach__hint">{{ state.goalQuery.length }}/500 characters</span>
+        <span id="goal-hint" class="goal-coach__hint">{{ state.goalQuery.length }}/100 characters</span>
         <span *ngIf="hasError" id="goal-error" class="goal-coach__error-text" role="alert">
           {{ state.errorMessage }}
         </span>

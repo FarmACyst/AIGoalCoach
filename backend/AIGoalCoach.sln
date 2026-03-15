@@ -5,11 +5,11 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIGoalCoach.Core", "AIGoalCoach.Core\AIGoalCoach.Core.csproj", "{4B3C1BA6-60BE-4457-8DDA-5C39D02E163E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIGoalCoach.Tests", "AIGoalCoach.Tests\AIGoalCoach.Tests.csproj", "{9290A068-EA8B-44C4-8579-593B04F4692B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIGoalCoach.API", "AIGoalCoach.API\AIGoalCoach.API.csproj", "{59E2C41E-1DAE-462D-9B2C-556D198FF9D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIGoalCoach.Services", "AIGoalCoach.Services\AIGoalCoach.Services.csproj", "{5AE072DF-D971-43E0-AAEB-E09FF1D5678C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIGoalCoach.Services", "AIGoalCoach.Services\AIGoalCoach.Services.csproj", "{5AE072DF-D971-43E0-AAEB-E09FF1D5678C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIGoalCoach.Evals", "AIGoalCoach.Evals\AIGoalCoach.Evals.csproj", "{D9E66D6D-2D5D-4ECC-A0C0-54FC9398C38B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		{4B3C1BA6-60BE-4457-8DDA-5C39D02E163E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B3C1BA6-60BE-4457-8DDA-5C39D02E163E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B3C1BA6-60BE-4457-8DDA-5C39D02E163E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9290A068-EA8B-44C4-8579-593B04F4692B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9290A068-EA8B-44C4-8579-593B04F4692B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9290A068-EA8B-44C4-8579-593B04F4692B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9290A068-EA8B-44C4-8579-593B04F4692B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{59E2C41E-1DAE-462D-9B2C-556D198FF9D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{59E2C41E-1DAE-462D-9B2C-556D198FF9D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59E2C41E-1DAE-462D-9B2C-556D198FF9D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{5AE072DF-D971-43E0-AAEB-E09FF1D5678C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AE072DF-D971-43E0-AAEB-E09FF1D5678C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AE072DF-D971-43E0-AAEB-E09FF1D5678C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9E66D6D-2D5D-4ECC-A0C0-54FC9398C38B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9E66D6D-2D5D-4ECC-A0C0-54FC9398C38B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9E66D6D-2D5D-4ECC-A0C0-54FC9398C38B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9E66D6D-2D5D-4ECC-A0C0-54FC9398C38B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

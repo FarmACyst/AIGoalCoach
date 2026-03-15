@@ -160,8 +160,8 @@ export class GoalCoachComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    if (trimmedQuery.length > 500) {
-      this.setError('Goal must not exceed 500 characters.');
+    if (trimmedQuery.length > 100) {
+      this.setError('Goal must not exceed 100 characters.');
       return false;
     }
 

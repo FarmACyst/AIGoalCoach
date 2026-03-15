@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AIGoalCoach.API.Controllers
 {
+    /// <summary>
+    /// API endpoint for goal refinement operations.
+    /// </summary>
     [Route("api/goal")]
     [ApiController]
     public class GoalController : ControllerBase
@@ -32,21 +35,30 @@ namespace AIGoalCoach.API.Controllers
         /// </remarks>
         /// <response code="200">Returns the refined goal</response>
         /// <response code="400">If the goal input is invalid</response>
+        /// <response code="500">If an unexpected error occurs during goal refinement</response>
         [HttpPost("refine")]
         public async Task<IActionResult> RefineGoals(GoalRequest goalRequest)
         {
-            _loggerService.Log("Request", goalRequest);
-            GoalRequestValidator validator = new GoalRequestValidator();
-            var validationResult = validator.Validate(goalRequest);
-            if (!validationResult.IsValid)
+            try
             {
-                _loggerService.Log("Error", validationResult.Errors);
-                return BadRequest(validationResult.Errors);
-            }
+                // Validate request model
+                GoalRequestValidator validator = new GoalRequestValidator();
+                var validationResult = validator.Validate(goalRequest);
 
-            var goals = await _goalService.RefineGoals(goalRequest);
-            _loggerService.Log("Response", goals);
-            return Ok(goals);
+                if (!validationResult.IsValid)
+                {
+                    _loggerService.Log("Validation failed", validationResult.Errors);
+                    return BadRequest(validationResult.Errors);
+                }
+
+                var goals = await _goalService.RefineGoals(goalRequest);
+                return Ok(goals);
+            }
+            catch (Exception ex)
+            {
+                _loggerService.Log("Error in RefineGoals endpoint: " + ex.Message, ex);
+                return StatusCode(500, new { error = "An error occurred while processing your goal." });
+            }
         }
     }
 }

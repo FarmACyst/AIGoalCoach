@@ -13,8 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<ILoggerService, LoggerService>();
-builder.Services.AddScoped<IGoalService, GoalService>();
 builder.Services.AddSingleton<IAIService, GeminiService>();
+builder.Services.AddScoped<IGoalService, GoalService>();
 
 builder.Services.AddSwaggerGen(c =>
 {
