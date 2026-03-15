@@ -12,14 +12,13 @@ export class GoalCoachComponent {
   loading = false;
   error: string | null = null;
 
-  // NOTE: The endpoint below is a reasonable default. Update to match your backend.
-  private readonly endpoint = '/api/refine';
+  private readonly endpoint = 'http://localhost:5099/api/goal/refine';
 
   constructor(private http: HttpClient) {}
 
   refine(): void {
-    const q = (this.query || '').trim();
-    if (!q) {
+    const userInput = (this.query || '').trim();
+    if (!userInput) {
       this.error = 'Please enter a goal or prompt to refine.';
       this.results = [];
       return;
@@ -29,7 +28,7 @@ export class GoalCoachComponent {
     this.error = null;
     this.results = [];
 
-    this.http.post<string[]>(this.endpoint, { input: q }).subscribe({
+    this.http.post<string[]>(this.endpoint, { userGoal: userInput }).subscribe({
       next: (res) => {
         this.results = Array.isArray(res) ? res : [];
         this.loading = false;
