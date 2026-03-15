@@ -1,22 +1,157 @@
-<div class="page">
-	<header class="header">
-		<h1>AI Goal Coach</h1>
-	</header>
+<div class="goal-coach">
+  <!-- Header Section -->
+  <header class="goal-coach__header">
+    <h1 class="goal-coach__title">AI Goal Coach</h1>
+    <p class="goal-coach__subtitle">Transform vague aspirations into SMART, measurable goals</p>
+  </header>
 
-	<main class="card">
-		<label for="goalInput">Describe your goal</label>
-		<input id="goalInput" class="input" [(ngModel)]="query" placeholder="Type your goal or prompt..." (keyup.enter)="refine()" />
+  <!-- Main Content -->
+  <main class="goal-coach__content">
+    <!-- Goal Input Form -->
+    <form class="goal-coach__form" (ngSubmit)="onRefineClick()" novalidate>
+      <div class="goal-coach__form-group">
+        <label for="goal-input" class="goal-coach__label">Describe your goal</label>
+        <textarea
+          id="goal-input"
+          class="goal-coach__input"
+          [(ngModel)]="state.goalQuery"
+          name="goalQuery"
+          placeholder="e.g., 'I want to get better at sales' or 'Learn machine learning'"
+          (keydown)="onInputKeyPress($event)"
+          aria-label="Goal input"
+          aria-describedby="goal-hint goal-error"
+          [attr.aria-busy]="isLoading"
+          [disabled]="isLoading"
+          maxlength="500"
+          rows="3"
+          required
+        ></textarea>
+        <span id="goal-hint" class="goal-coach__hint">{{ state.goalQuery.length }}/500 characters</span>
+        <span *ngIf="hasError" id="goal-error" class="goal-coach__error-text" role="alert">
+          {{ state.errorMessage }}
+        </span>
+      </div>
 
-		<button class="btn" (click)="refine()" [disabled]="loading">{{ loading ? 'Refining...' : 'Refine' }}</button>
+      <!-- Action Buttons -->
+      <div class="goal-coach__actions">
+        <button
+          type="submit"
+          class="goal-coach__button goal-coach__button--primary"
+          [disabled]="isLoading || !state.goalQuery.trim()"
+          aria-label="Refine goal"
+        >
+          <span class="goal-coach__button-text">{{ refineButtonLabel }}</span>
+          <span class="goal-coach__spinner" *ngIf="isLoading" aria-hidden="true"></span>
+        </button>
 
-		<section class="results" *ngIf="results.length || error">
-			<div *ngIf="error" class="error">{{ error }}</div>
+        <button
+          type="button"
+          class="goal-coach__button goal-coach__button--secondary"
+          (click)="onClear()"
+          [disabled]="isLoading || !state.goalQuery"
+          aria-label="Clear input"
+        >
+          Clear
+        </button>
+      </div>
+    </form>
 
-			<ul *ngIf="results.length" class="result-list">
-				<li *ngFor="let r of results" class="result-item">{{ r }}</li>
-			</ul>
-		</section>
-	</main>
+    <!-- Results Section -->
+    <section *ngIf="hasResults || hasError" class="goal-coach__results" role="region" aria-label="Refined goal results">
+      <!-- Error Alert -->
+      <div *ngIf="hasError" class="goal-coach__alert goal-coach__alert--error" role="alert">
+        <strong>⚠️ Error:</strong> {{ state.errorMessage }}
+      </div>
 
+      <!-- Success Results -->
+      <div *ngIf="hasResults && !hasError" class="goal-coach__result-card">
+        <div class="goal-coach__result-header">
+          <h2 class="goal-coach__result-title">
+            {{ state.refinedGoal!.confidenceScore >= 5 ? 'Refined Goal' : 'Goal Suggestions' }}
+          </h2>
+          <span class="goal-coach__confidence" [title]="'Confidence: ' + state.refinedGoal!.confidenceScore + '/10'">
+            {{ confidenceLevel }} ({{ state.refinedGoal!.confidenceScore }}/10)
+          </span>
+        </div>
+
+        <!-- Refined Goal or Suggestion -->
+        <div class="goal-coach__result-content">
+          <div class="goal-coach__goal-box">
+            <p class="goal-coach__goal-text">
+              {{ state.refinedGoal!.confidenceScore >= 5 
+                ? state.refinedGoal!.refinedGoal 
+                : 'We suggest rephrasing your goal to be more specific and measurable. The suggestions below may help.' }}
+            </p>
+          </div>
+
+          <!-- Key Results or Suggestions -->
+          <div class="goal-coach__key-results-section">
+            <h3 class="goal-coach__key-results-title">
+              {{ state.refinedGoal!.confidenceScore >= 5 ? '📋 Key Results' : '💡 Suggestions' }}
+            </h3>
+            <ol class="goal-coach__key-results-list" role="list">
+              <li *ngFor="let keyResult of state.refinedGoal!.keyResults; let index = index" class="goal-coach__key-result-item" role="listitem">
+                <span class="goal-coach__key-result-number">{{ index + 1 }}</span>
+                <span class="goal-coach__key-result-text">{{ keyResult }}</span>
+              </li>
+            </ol>
+          </div>
+
+          <!-- Save Button -->
+          <button
+            type="button"
+            class="goal-coach__button goal-coach__button--success"
+            (click)="onSaveGoal()"
+            [disabled]="!state.refinedGoal || state.refinedGoal.confidenceScore < 5"
+            [title]="state.refinedGoal && state.refinedGoal.confidenceScore < 5 ? 'Cannot save goal with low confidence score. Please refine your goal.' : 'Save this refined goal'"
+            aria-label="Save this refined goal"
+          >
+            ✅ Save This Goal
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Saved Goals Section -->
+  <section class="goal-coach__saved-section" *ngIf="state.savedGoals.length > 0" role="region" aria-label="Saved goals">
+    <div class="goal-coach__saved-container">
+      <h2 class="goal-coach__saved-title">📚 Your Saved Goals</h2>
+
+      <div class="goal-coach__saved-list">
+        <article
+          *ngFor="let goal of state.savedGoals"
+          class="goal-coach__saved-goal"
+          role="article"
+          [attr.aria-label]="'Saved goal: ' + goal.originalGoal"
+        >
+          <div class="goal-coach__saved-goal-header">
+            <div class="goal-coach__saved-goal-info" (click)="onViewGoalDetails(goal)" role="button" tabindex="0" (keydown.enter)="onViewGoalDetails(goal)" (keydown.space)="onViewGoalDetails(goal)">
+              <p class="goal-coach__saved-original">Original: {{ goal.originalGoal }}</p>
+              <p class="goal-coach__saved-refined">Refined: {{ goal.refinedGoal.refinedGoal }}</p>
+              <p class="goal-coach__saved-date">{{ goal.createdAt | date: 'short' }}</p>
+              <span class="goal-coach__saved-goal-link">Click to view details →</span>
+            </div>
+            <button
+              type="button"
+              class="goal-coach__button goal-coach__button--danger goal-coach__button--small"
+              (click)="onDeleteGoal(goal.id)"
+              [attr.aria-label]="'Delete goal: ' + goal.originalGoal"
+            >
+              🗑️ Delete
+            </button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
 </div>
+
+<!-- Goal Details Modal -->
+<app-goal-details-modal
+  [goal]="selectedGoal"
+  [isOpen]="isModalOpen"
+  (onClose)="onCloseModal()"
+  (onDelete)="onDeleteGoalFromModal($event)"
+></app-goal-details-modal>
 

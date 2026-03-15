@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Reset default body margins and padding */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+}
+

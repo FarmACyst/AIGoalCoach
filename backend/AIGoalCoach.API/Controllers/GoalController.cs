@@ -35,7 +35,6 @@ namespace AIGoalCoach.API.Controllers
         [HttpPost("refine")]
         public async Task<IActionResult> RefineGoals(GoalRequest goalRequest)
         {
-            return Ok("Done");
             _loggerService.Log("Request", goalRequest);
             GoalRequestValidator validator = new GoalRequestValidator();
             var validationResult = validator.Validate(goalRequest);

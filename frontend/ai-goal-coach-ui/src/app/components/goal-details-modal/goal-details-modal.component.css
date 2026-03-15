@@ -1,0 +1,476 @@
+/**
+ * Goal Details Modal Component Styles
+ * Professional modal with backdrop, smooth animations, and responsive design
+ */
+
+:host {
+  --modal-backdrop-bg: rgba(0, 0, 0, 0.5);
+  --modal-bg: #1e293b;
+  --modal-border-color: #38bdf8;
+  --modal-text-color: #f1f5f9;
+  --modal-text-secondary: #cbd5e1;
+  --modal-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  --modal-padding: 2rem;
+  --modal-radius: 12px;
+  --transition-timing: 0.3s ease;
+
+  --color-high: #10b981;
+  --color-medium: #f59e0b;
+  --color-low: #ef4444;
+}
+
+/* Backdrop */
+.goal-details-modal__backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--modal-backdrop-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn var(--transition-timing);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Container */
+.goal-details-modal__container {
+  background-color: var(--modal-bg);
+  border-radius: var(--modal-radius);
+  box-shadow: var(--modal-shadow);
+  max-width: 750px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid var(--modal-border-color);
+  display: flex;
+  flex-direction: column;
+  animation: slideUp var(--transition-timing);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Modal Header */
+.goal-details-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--modal-padding);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+  flex-shrink: 0;
+}
+
+.goal-details-modal__title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--modal-text-color);
+}
+
+.goal-details-modal__close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--modal-text-secondary);
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all var(--transition-timing);
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.goal-details-modal__close-btn:hover {
+  background-color: rgba(56, 189, 248, 0.1);
+  color: var(--modal-text-color);
+  transform: scale(1.1);
+}
+
+.goal-details-modal__close-btn:focus-visible {
+  outline: 2px solid var(--modal-border-color);
+  outline-offset: 2px;
+}
+
+/* Modal Content */
+.goal-details-modal__content {
+  padding: var(--modal-padding);
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+/* Section Styles */
+.goal-details-modal__section {
+  margin-bottom: 2rem;
+}
+
+.goal-details-modal__section:last-child {
+  margin-bottom: 0;
+}
+
+.goal-details-modal__section--metadata {
+  background-color: rgba(56, 189, 248, 0.05);
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 3px solid var(--modal-border-color);
+}
+
+.goal-details-modal__section-title {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--modal-border-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Text Box */
+.goal-details-modal__text-box {
+  background-color: rgba(15, 23, 42, 0.5);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.goal-details-modal__text {
+  margin: 0;
+  color: var(--modal-text-color);
+  line-height: 1.6;
+  word-break: break-word;
+  flex: 1;
+  font-size: 0.95rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+}
+
+.goal-details-modal__copy-btn {
+  background-color: rgba(56, 189, 248, 0.2);
+  color: var(--modal-border-color);
+  border: 1px solid var(--modal-border-color);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all var(--transition-timing);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.goal-details-modal__copy-btn:hover {
+  background-color: var(--modal-border-color);
+  color: var(--modal-bg);
+  transform: scale(1.05);
+}
+
+.goal-details-modal__copy-btn:focus-visible {
+  outline: 2px solid var(--modal-border-color);
+  outline-offset: 2px;
+}
+
+/* Confidence Score */
+.goal-details-modal__confidence {
+  background-color: rgba(15, 23, 42, 0.5);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.goal-details-modal__confidence-bar {
+  width: 100%;
+  height: 24px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.goal-details-modal__confidence-fill {
+  height: 100%;
+  transition: width var(--transition-timing), background-color var(--transition-timing);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+}
+
+.goal-details-modal__confidence-fill--high {
+  background: linear-gradient(90deg, var(--color-high), #059669);
+}
+
+.goal-details-modal__confidence-fill--medium {
+  background: linear-gradient(90deg, var(--color-medium), #d97706);
+}
+
+.goal-details-modal__confidence-fill--low {
+  background: linear-gradient(90deg, var(--color-low), #dc2626);
+}
+
+.goal-details-modal__confidence-text {
+  margin: 0;
+  color: var(--modal-text-color);
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.goal-details-modal__confidence-label {
+  color: var(--modal-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-left: 0.5rem;
+}
+
+/* Key Results List */
+.goal-details-modal__key-results {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.goal-details-modal__key-result-item {
+  background-color: rgba(15, 23, 42, 0.5);
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 3px solid var(--modal-border-color);
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.goal-details-modal__key-result-number {
+  flex-shrink: 0;
+  background-color: var(--modal-border-color);
+  color: var(--modal-bg);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.goal-details-modal__key-result-text {
+  color: var(--modal-text-color);
+  line-height: 1.6;
+  word-break: break-word;
+  font-size: 0.95rem;
+}
+
+/* Metadata */
+.goal-details-modal__metadata {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.goal-details-modal__metadata-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.goal-details-modal__metadata-label {
+  color: var(--modal-text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.goal-details-modal__metadata-value {
+  color: var(--modal-text-color);
+  font-size: 0.95rem;
+}
+
+.goal-details-modal__metadata-value--monospace {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  word-break: break-all;
+}
+
+/* Modal Footer */
+.goal-details-modal__footer {
+  display: flex;
+  gap: 1rem;
+  padding: var(--modal-padding);
+  border-top: 1px solid rgba(56, 189, 248, 0.2);
+  flex-shrink: 0;
+  justify-content: flex-end;
+}
+
+/* Button Styles */
+.goal-details-modal__button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-timing);
+  border: none;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.goal-details-modal__button:focus-visible {
+  outline: 2px solid var(--modal-border-color);
+  outline-offset: 2px;
+}
+
+.goal-details-modal__button--secondary {
+  background-color: rgba(56, 189, 248, 0.2);
+  color: var(--modal-border-color);
+  border: 1px solid var(--modal-border-color);
+}
+
+.goal-details-modal__button--secondary:hover {
+  background-color: var(--modal-border-color);
+  color: var(--modal-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+}
+
+.goal-details-modal__button--danger {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid #ef4444;
+}
+
+.goal-details-modal__button--danger:hover {
+  background-color: #ef4444;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.goal-details-modal__button:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .goal-details-modal__container {
+    max-width: 95vw;
+    max-height: 95vh;
+    border-radius: 8px;
+  }
+
+  :host {
+    --modal-padding: 1.5rem;
+  }
+
+  .goal-details-modal__header {
+    padding: 1.5rem;
+  }
+
+  .goal-details-modal__section-title {
+    font-size: 1rem;
+  }
+
+  .goal-details-modal__text-box {
+    flex-direction: column;
+  }
+
+  .goal-details-modal__copy-btn {
+    width: 100%;
+  }
+
+  .goal-details-modal__footer {
+    flex-direction: column;
+  }
+
+  .goal-details-modal__button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  :host {
+    --modal-padding: 1rem;
+  }
+
+  .goal-details-modal__container {
+    border-radius: 0;
+  }
+
+  .goal-details-modal__title {
+    font-size: 1.25rem;
+  }
+
+  .goal-details-modal__section-title {
+    font-size: 0.95rem;
+  }
+
+  .goal-details-modal__text {
+    font-size: 0.9rem;
+  }
+
+  .goal-details-modal__metadata {
+    gap: 0.75rem;
+  }
+
+  .goal-details-modal__metadata-item {
+    gap: 0.15rem;
+  }
+}
+
+/* Scrollbar Styling - Hidden scrollbar */
+.goal-details-modal__container {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.goal-details-modal__container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .goal-details-modal__backdrop,
+  .goal-details-modal__container,
+  .goal-details-modal__close-btn,
+  .goal-details-modal__copy-btn,
+  .goal-details-modal__confidence-fill,
+  .goal-details-modal__button {
+    animation: none;
+    transition: none;
+  }
+}

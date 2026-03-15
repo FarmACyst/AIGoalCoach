@@ -1,0 +1,146 @@
+<!-- Modal Backdrop -->
+<div
+  class="goal-details-modal__backdrop"
+  *ngIf="isOpen"
+  (click)="onBackdropClick()"
+  (keydown)="onKeyDown($event)"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Goal details"
+  tabindex="-1"
+>
+  <!-- Modal Container -->
+  <div class="goal-details-modal__container" (click)="onModalClick($event)">
+    <!-- Modal Header -->
+    <header class="goal-details-modal__header">
+      <h2 class="goal-details-modal__title">Goal Details</h2>
+      <button
+        type="button"
+        class="goal-details-modal__close-btn"
+        (click)="closeModal()"
+        aria-label="Close modal"
+        title="Close (Esc)"
+      >
+        ✕
+      </button>
+    </header>
+
+    <!-- Modal Content -->
+    <div class="goal-details-modal__content" *ngIf="goal">
+      <!-- Original Goal Section -->
+      <section class="goal-details-modal__section">
+        <h3 class="goal-details-modal__section-title">📝 Original Goal</h3>
+        <div class="goal-details-modal__text-box">
+          <p class="goal-details-modal__text">{{ goal.originalGoal }}</p>
+          <button
+            type="button"
+            class="goal-details-modal__copy-btn"
+            (click)="copyToClipboard(goal.originalGoal)"
+            title="Copy to clipboard"
+            aria-label="Copy original goal"
+          >
+            📋 Copy
+          </button>
+        </div>
+      </section>
+
+      <!-- Refined Goal Section -->
+      <section class="goal-details-modal__section">
+        <h3 class="goal-details-modal__section-title">✨ Refined Goal (SMART)</h3>
+        <div class="goal-details-modal__text-box">
+          <p class="goal-details-modal__text">{{ goal.refinedGoal.refinedGoal }}</p>
+          <button
+            type="button"
+            class="goal-details-modal__copy-btn"
+            (click)="copyToClipboard(goal.refinedGoal.refinedGoal)"
+            title="Copy to clipboard"
+            aria-label="Copy refined goal"
+          >
+            📋 Copy
+          </button>
+        </div>
+      </section>
+
+      <!-- Confidence Score Section -->
+      <section class="goal-details-modal__section">
+        <h3 class="goal-details-modal__section-title">📊 Confidence Score</h3>
+        <div class="goal-details-modal__confidence">
+          <div class="goal-details-modal__confidence-bar">
+            <div
+              class="goal-details-modal__confidence-fill"
+              [style.width.%]="goal.refinedGoal.confidenceScore * 10"
+              [ngClass]="
+                goal.refinedGoal.confidenceScore >= 8
+                  ? 'goal-details-modal__confidence-fill--high'
+                  : goal.refinedGoal.confidenceScore >= 5
+                  ? 'goal-details-modal__confidence-fill--medium'
+                  : 'goal-details-modal__confidence-fill--low'
+              "
+            ></div>
+          </div>
+          <p class="goal-details-modal__confidence-text">
+            {{ goal.refinedGoal.confidenceScore }}/10
+            <span class="goal-details-modal__confidence-label">
+              {{
+                goal.refinedGoal.confidenceScore >= 8
+                  ? '(High)'
+                  : goal.refinedGoal.confidenceScore >= 5
+                  ? '(Medium)'
+                  : '(Low)'
+              }}
+            </span>
+          </p>
+        </div>
+      </section>
+
+      <!-- Key Results Section -->
+      <section class="goal-details-modal__section">
+        <h3 class="goal-details-modal__section-title">📋 Key Results</h3>
+        <ol class="goal-details-modal__key-results" role="list">
+          <li *ngFor="let keyResult of goal.refinedGoal.keyResults; let index = index" class="goal-details-modal__key-result-item" role="listitem">
+            <span class="goal-details-modal__key-result-number">{{ index + 1 }}</span>
+            <span class="goal-details-modal__key-result-text">{{ keyResult }}</span>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Metadata Section -->
+      <section class="goal-details-modal__section goal-details-modal__section--metadata">
+        <div class="goal-details-modal__metadata">
+          <div class="goal-details-modal__metadata-item">
+            <span class="goal-details-modal__metadata-label">Created:</span>
+            <span class="goal-details-modal__metadata-value">{{ goal.createdAt | date: 'medium' }}</span>
+          </div>
+          <!-- <div *ngIf="goal.updatedAt" class="goal-details-modal__metadata-item">
+            <span class="goal-details-modal__metadata-label">Updated:</span>
+            <span class="goal-details-modal__metadata-value">{{ goal.updatedAt | date: 'medium' }}</span>
+          </div>
+          <div class="goal-details-modal__metadata-item">
+            <span class="goal-details-modal__metadata-label">Goal ID:</span>
+            <span class="goal-details-modal__metadata-value goal-details-modal__metadata-value--monospace">{{ goal.id }}</span>
+          </div> -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Modal Footer -->
+    <footer class="goal-details-modal__footer">
+      <button
+        type="button"
+        class="goal-details-modal__button goal-details-modal__button--secondary"
+        (click)="closeModal()"
+        aria-label="Close modal"
+      >
+        Close
+      </button>
+      <button
+        type="button"
+        class="goal-details-modal__button goal-details-modal__button--danger"
+        (click)="deleteGoal()"
+        aria-label="Delete this goal"
+      >
+        🗑️ Delete Goal
+      </button>
+    </footer>
+  </div>
+</div>
